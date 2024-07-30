@@ -18,9 +18,6 @@ ament_vendor(mujoco_vendor
     GLOBAL_HOOK
 )
 
-ament_export_libraries(mujoco)
-ament_export_dependencies(ament_cmake)
-
 ament_package(
   CONFIG_EXTRAS_POST "mujoco_vendor-extra.cmake.in"
 )

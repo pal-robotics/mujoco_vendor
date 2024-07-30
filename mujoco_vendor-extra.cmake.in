@@ -1,7 +1,9 @@
 @PACKAGE_INIT@
 set(MUJOCO_DIR "${@PROJECT_NAME@_DIR}/../../../opt/@PROJECT_NAME@/lib/cmake/mujoco")
 set(CUSTOM_MUJOCO_PATH ${MUJOCO_DIR}/../../..)
-# find_package(RBDL REQUIRED)
-# set_and_check(mujoco_vendor_INCLUDE_DIRS "${MUJOCO_INCLUDE_DIR}")
-# set(mujoco_vendor_LIBRARIES "${MUJOCO_LIBRARY}" "${MUJOCO_URDFREADER_LIBRARY}" "${MUJOCO_GEOMETRY_LIBRARY}" "${MUJOCO_LUAMODEL_LIBRARY}")
-# check_required_components(mujoco_vendor)
+include("${MUJOCO_DIR}/mujocoTargets.cmake")
+set(mujoco_vendor_INCLUDE_DIRS "${CUSTOM_MUJOCO_PATH}/include")
+if(NOT EXISTS ${mujoco_vendor_INCLUDE_DIRS})
+    message(FATAL_ERROR "Directory ${mujoco_vendor_INCLUDE_DIRS} referenced by variable mujoco_vendor_INCLUDE_DIRS does not exist.")
+endif()
+set(mujoco_vendor_LIBRARIES mujoco::mujoco)
