@@ -1,0 +1,26 @@
+
+cmake_minimum_required(VERSION 3.8)
+project(mujoco_vendor)
+
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
+
+find_package(ament_cmake REQUIRED)
+find_package(ament_cmake_vendor_package REQUIRED)
+
+set(MUJOCO_BUILD_BRANCH 3.2.0)
+ament_vendor(mujoco_vendor
+  VCS_URL https://github.com/google-deepmind/mujoco.git
+  VCS_VERSION ${MUJOCO_BUILD_BRANCH}
+  CMAKE_ARGS
+    "-DCMAKE_BUILD_TYPE=Release"
+    GLOBAL_HOOK
+)
+
+ament_export_libraries(mujoco)
+ament_export_dependencies(ament_cmake)
+
+ament_package(
+  CONFIG_EXTRAS_POST "mujoco_vendor-extra.cmake.in"
+)
