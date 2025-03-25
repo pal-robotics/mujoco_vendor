@@ -9,7 +9,7 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_vendor_package REQUIRED)
 
-set(MUJOCO_BUILD_BRANCH 3.2.0)
+set(MUJOCO_BUILD_BRANCH 3.3.0)
 ament_vendor(mujoco_vendor
   VCS_URL https://github.com/google-deepmind/mujoco.git
   VCS_VERSION ${MUJOCO_BUILD_BRANCH}
