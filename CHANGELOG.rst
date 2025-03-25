@@ -2,8 +2,8 @@
 Changelog for package mujoco_vendor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.1 (2025-03-25)
+------------------
 * Merge branch 'update-version' into 'master'
   updated mujoco version to 3.3.0
   See merge request third-party/mujoco_vendor!1
