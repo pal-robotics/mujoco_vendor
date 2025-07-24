@@ -2,6 +2,15 @@
 Changelog for package mujoco_vendor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge branch 'fix/vendor/build' into 'master'
+  Fix vendor build issue on CI
+  See merge request third-party/mujoco_vendor!2
+* Bump MuJoCo version
+* Add missing dependencies for compiling MuJoCo
+* Contributors: Sai Kishor Kothakota
+
 0.0.1 (2025-03-25)
 ------------------
 * Merge branch 'update-version' into 'master'
