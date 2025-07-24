@@ -2,8 +2,8 @@
 Changelog for package mujoco_vendor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.2 (2025-07-24)
+------------------
 * Merge branch 'fix/vendor/build' into 'master'
   Fix vendor build issue on CI
   See merge request third-party/mujoco_vendor!2
