@@ -11,6 +11,11 @@
   <buildtool_depend>ament_cmake_vendor_package</buildtool_depend>
   <buildtool_depend>git</buildtool_depend>
 
+  <build_depend>libglfw3-dev</build_depend>
+  <build_depend>libxinerama-dev</build_depend>
+  <build_depend>libxcursor-dev</build_depend>
+  <build_depend>libxi-dev</build_depend>
+
   <export>
     <build_type>ament_cmake</build_type>
   </export>
