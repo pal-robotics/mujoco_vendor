@@ -2,6 +2,11 @@
 Changelog for package mujoco_vendor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* add libxrandr dependency
+* Contributors: Sai Kishor Kothakota
+
 0.0.2 (2025-07-24)
 ------------------
 * Merge branch 'fix/vendor/build' into 'master'
