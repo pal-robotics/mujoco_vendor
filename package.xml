@@ -3,9 +3,13 @@
 <package format="3">
   <name>mujoco_vendor</name>
   <version>0.0.3</version>
-  <description>Vendor package for Mujoco simulator</description>
-  <maintainer email="sergi.acosta@pal-robotics.com">user</maintainer>
-  <license>Apache-2.0 License</license>
+  <description>Vendor package for MuJoCo simulator</description>
+  <maintainer email="sai.kishor@pal-robotics.com">Sai Kishor Kothakota</maintainer>
+  <maintainer email="sergi.acosta@pal-robotics.com">Sergi de las Muelas Acosta</maintainer>
+  <license>Apache License 2.0</license>
+
+  <author email="sergi.acosta@pal-robotics.com">Sergi de las Muelas Acosta</author>
+  <author email="sai.kishor@pal-robotics.com">Sai Kishor Kothakota</author>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
   <buildtool_depend>ament_cmake_vendor_package</buildtool_depend>
