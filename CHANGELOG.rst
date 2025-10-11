@@ -2,6 +2,14 @@
 Changelog for package mujoco_vendor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge branch 'update/license_and_release_information' into 'master'
+  Update maintainers + authors + license information
+  See merge request third-party/mujoco_vendor!3
+* Update maintainers + authors + license information
+* Contributors: Sai Kishor Kothakota
+
 0.0.3 (2025-07-25)
 ------------------
 * add libxrandr dependency
