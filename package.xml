@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>mujoco_vendor</name>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
   <description>Vendor package for MuJoCo simulator</description>
   <maintainer email="sai.kishor@pal-robotics.com">Sai Kishor Kothakota</maintainer>
   <maintainer email="sergi.acosta@pal-robotics.com">Sergi de las Muelas Acosta</maintainer>

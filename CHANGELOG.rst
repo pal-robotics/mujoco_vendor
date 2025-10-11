@@ -2,8 +2,8 @@
 Changelog for package mujoco_vendor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.4 (2025-10-12)
+------------------
 * Merge branch 'update/license_and_release_information' into 'master'
   Update maintainers + authors + license information
   See merge request third-party/mujoco_vendor!3
