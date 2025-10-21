@@ -2,8 +2,8 @@
 Changelog for package mujoco_vendor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.5 (2025-10-21)
+------------------
 * Merge branch 'sma/add_install_simulate_project' into 'master'
   Add install rule for simulate folder
   See merge request third-party/mujoco_vendor!4
