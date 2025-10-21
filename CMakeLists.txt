@@ -8,6 +8,7 @@ endif()
 
 find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_vendor_package REQUIRED)
+include(ExternalProject)
 
 set(MUJOCO_BUILD_BRANCH 3.3.4)
 ament_vendor(mujoco_vendor
@@ -16,6 +17,11 @@ ament_vendor(mujoco_vendor
   CMAKE_ARGS
     "-DCMAKE_BUILD_TYPE=Release"
     GLOBAL_HOOK
+)
+ExternalProject_Get_Property(mujoco_vendor SOURCE_DIR)
+
+install(DIRECTORY ${SOURCE_DIR}/simulate/
+  DESTINATION opt/${PROJECT_NAME}/simulate
 )
 
 ament_package(
