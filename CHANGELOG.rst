@@ -2,6 +2,14 @@
 Changelog for package mujoco_vendor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge branch 'sma/add_install_simulate_project' into 'master'
+  Add install rule for simulate folder
+  See merge request third-party/mujoco_vendor!4
+* Add install rule for simulate folder
+* Contributors: Sai Kishor Kothakota, sergiacosta
+
 0.0.4 (2025-10-12)
 ------------------
 * Merge branch 'update/license_and_release_information' into 'master'
