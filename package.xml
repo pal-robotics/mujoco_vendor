@@ -25,6 +25,8 @@
   <build_depend>wayland</build_depend>
   <build_depend>libxkbcommon-dev</build_depend>
 
+  <exec_depend>wayland</exec_depend>
+
   <export>
     <build_type>ament_cmake</build_type>
   </export>
