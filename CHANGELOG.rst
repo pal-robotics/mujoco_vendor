@@ -2,6 +2,21 @@
 Changelog for package mujoco_vendor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge branch 'bump/mujoco_vendor/3.4.0' into 'master'
+  Bump mujoco_vendor to 3.4.0
+  See merge request third-party/mujoco_vendor!5
+* set the -flto flag to auto
+* switch to wayland-dev rosdep
+* add wayland dependency as exec depend
+* Add libwayland-dev libxkbcommon-dev dependencies
+* add libx11-dev dependency
+* add pkg-config as build depend
+* Update description
+* Bump mujoco_vendor to 3.4.0
+* Contributors: Sai Kishor Kothakota
+
 0.0.5 (2025-10-21)
 ------------------
 * Merge branch 'sma/add_install_simulate_project' into 'master'
