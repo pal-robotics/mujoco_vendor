@@ -2,8 +2,8 @@
 Changelog for package mujoco_vendor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.6 (2025-12-23)
+------------------
 * Merge branch 'bump/mujoco_vendor/3.4.0' into 'master'
   Bump mujoco_vendor to 3.4.0
   See merge request third-party/mujoco_vendor!5
