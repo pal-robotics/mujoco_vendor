@@ -16,6 +16,8 @@ ament_vendor(mujoco_vendor
   VCS_VERSION ${MUJOCO_BUILD_BRANCH}
   CMAKE_ARGS
     "-DCMAKE_BUILD_TYPE=Release"
+    "-DCMAKE_CXX_FLAGS=-flto=auto"
+    "-DCMAKE_C_FLAGS=-flto=auto"
     GLOBAL_HOOK
 )
 ExternalProject_Get_Property(mujoco_vendor SOURCE_DIR)
