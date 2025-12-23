@@ -22,6 +22,8 @@
   <build_depend>libxi-dev</build_depend>
   <build_depend>libxrandr</build_depend>
   <build_depend>libx11-dev</build_depend>
+  <build_depend>wayland</build_depend>
+  <build_depend>libxkbcommon-dev</build_depend>
 
   <export>
     <build_type>ament_cmake</build_type>
