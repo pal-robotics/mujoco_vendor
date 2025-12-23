@@ -10,12 +10,14 @@ find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_vendor_package REQUIRED)
 include(ExternalProject)
 
-set(MUJOCO_BUILD_BRANCH 3.3.4)
+set(MUJOCO_BUILD_BRANCH 3.4.0)
 ament_vendor(mujoco_vendor
   VCS_URL https://github.com/google-deepmind/mujoco.git
   VCS_VERSION ${MUJOCO_BUILD_BRANCH}
   CMAKE_ARGS
     "-DCMAKE_BUILD_TYPE=Release"
+    "-DCMAKE_CXX_FLAGS=-flto=auto"
+    "-DCMAKE_C_FLAGS=-flto=auto"
     GLOBAL_HOOK
 )
 ExternalProject_Get_Property(mujoco_vendor SOURCE_DIR)

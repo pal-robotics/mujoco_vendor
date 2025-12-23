@@ -3,7 +3,7 @@
 <package format="3">
   <name>mujoco_vendor</name>
   <version>0.0.5</version>
-  <description>Vendor package for MuJoCo simulator</description>
+  <description>Vendor package for MuJoCo simulator of version 3.4.0</description>
   <maintainer email="sai.kishor@pal-robotics.com">Sai Kishor Kothakota</maintainer>
   <maintainer email="sergi.acosta@pal-robotics.com">Sergi de las Muelas Acosta</maintainer>
   <license>Apache License 2.0</license>
@@ -15,11 +15,15 @@
   <buildtool_depend>ament_cmake_vendor_package</buildtool_depend>
   <buildtool_depend>git</buildtool_depend>
 
+  <build_depend>pkg-config</build_depend>
   <build_depend>libglfw3-dev</build_depend>
   <build_depend>libxinerama-dev</build_depend>
   <build_depend>libxcursor-dev</build_depend>
   <build_depend>libxi-dev</build_depend>
   <build_depend>libxrandr</build_depend>
+  <build_depend>libx11-dev</build_depend>
+  <build_depend>wayland-dev</build_depend>
+  <build_depend>libxkbcommon-dev</build_depend>
 
   <export>
     <build_type>ament_cmake</build_type>
