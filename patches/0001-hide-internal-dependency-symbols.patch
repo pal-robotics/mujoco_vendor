@@ -1,0 +1,62 @@
+diff --git a/cmake/MujocoDependencies.cmake b/cmake/MujocoDependencies.cmake
+index 34be423..aa0f705 100644
+--- a/cmake/MujocoDependencies.cmake
++++ b/cmake/MujocoDependencies.cmake
+@@ -106,6 +106,11 @@ if(NOT TARGET lodepng)
+     add_library(lodepng STATIC ${LODEPNG_HEADERS} ${LODEPNG_SRCS})
+     target_compile_options(lodepng PRIVATE ${MUJOCO_MACOS_COMPILE_OPTIONS})
+     target_link_options(lodepng PRIVATE ${MUJOCO_MACOS_LINK_OPTIONS})
++    set_target_properties(lodepng PROPERTIES
++      C_VISIBILITY_PRESET hidden
++      CXX_VISIBILITY_PRESET hidden
++      VISIBILITY_INLINES_HIDDEN ON
++    )
+     if(NOT EMSCRIPTEN)
+       target_include_directories(lodepng PUBLIC ${lodepng_SOURCE_DIR})
+     else()
+@@ -159,6 +164,10 @@ target_compile_options(qhullstatic_r PRIVATE ${MUJOCO_MACOS_COMPILE_OPTIONS})
+ target_link_options(qhullstatic_r PRIVATE ${MUJOCO_MACOS_LINK_OPTIONS})
+ 
+ set(tinyxml2_BUILD_TESTING OFF)
++# Patch tinyxml2 to support hiding symbols when built as static dependency
++set(TINYXML2_PATCH_COMMAND
++  git apply --reject --whitespace=fix ${mujoco_SOURCE_DIR}/cmake/tinyxml2-hide-symbols.patch
++)
+ findorfetch(
+   USE_SYSTEM_PACKAGE
+   OFF
+@@ -172,9 +181,12 @@ findorfetch(
+   ${MUJOCO_DEP_VERSION_tinyxml2}
+   TARGETS
+   tinyxml2
++  PATCH_COMMAND
++  ${TINYXML2_PATCH_COMMAND}
+   EXCLUDE_FROM_ALL
+ )
+-target_compile_options(tinyxml2 PRIVATE ${MUJOCO_MACOS_COMPILE_OPTIONS})
++target_compile_options(tinyxml2 PRIVATE ${MUJOCO_MACOS_COMPILE_OPTIONS} -fvisibility=hidden -fvisibility-inlines-hidden)
++target_compile_definitions(tinyxml2 PRIVATE TINYXML2_STATIC_HIDDEN)
+ target_link_options(tinyxml2 PRIVATE ${MUJOCO_MACOS_LINK_OPTIONS})
+ 
+ # update cmake_minimum_required version for compatibility with newer version of cmake
+diff --git a/cmake/tinyxml2-hide-symbols.patch b/cmake/tinyxml2-hide-symbols.patch
+new file mode 100644
+index 0000000..c182720
+--- /dev/null
++++ b/cmake/tinyxml2-hide-symbols.patch
+@@ -0,0 +1,15 @@
++diff --git a/tinyxml2.h b/tinyxml2.h
++index c2e2c93..a1b2c3d 100644
++--- a/tinyxml2.h
+++++ b/tinyxml2.h
++@@ -69,7 +69,9 @@ distribution.
++ #   else
++ #       define TINYXML2_LIB
++ #   endif
++-#elif __GNUC__ >= 4
+++#elif defined(TINYXML2_STATIC_HIDDEN)
+++#   define TINYXML2_LIB
+++#elif __GNUC__ >= 4 && !defined(TINYXML2_STATIC_HIDDEN)
++ #   define TINYXML2_LIB __attribute__((visibility("default")))
++ #else
++ #   define TINYXML2_LIB

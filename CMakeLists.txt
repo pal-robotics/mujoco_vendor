@@ -18,7 +18,9 @@ ament_vendor(mujoco_vendor
     "-DCMAKE_BUILD_TYPE=Release"
     "-DCMAKE_CXX_FLAGS=-flto=auto"
     "-DCMAKE_C_FLAGS=-flto=auto"
-    GLOBAL_HOOK
+  PATCHES
+    patches/0001-hide-internal-dependency-symbols.patch
+  GLOBAL_HOOK
 )
 ExternalProject_Get_Property(mujoco_vendor SOURCE_DIR)
 
