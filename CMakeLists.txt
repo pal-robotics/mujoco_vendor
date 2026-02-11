@@ -48,7 +48,12 @@ install(DIRECTORY ${MUJOCO_ROOT_DIR}/
   DESTINATION opt/${PROJECT_NAME}
 )
 
-# Export includes and libraries
-ament_export_include_directories(${MUJOCO_INSTALL_DIR}/include)
-ament_export_libraries(mujoco)
-ament_package()
+# Export includes
+ament_export_include_directories(opt/${PROJECT_NAME}/include)
+
+# Install environment hook to set LD_LIBRARY_PATH
+ament_environment_hooks("${CMAKE_CURRENT_SOURCE_DIR}/env-hooks/${PROJECT_NAME}.dsv.in")
+
+ament_package(
+  CONFIG_EXTRAS_POST "mujoco_vendor-extras.cmake"
+)
