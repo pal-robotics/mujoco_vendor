@@ -41,35 +41,14 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(mujoco_binary)
 
 set(MUJOCO_ROOT_DIR "${mujoco_binary_SOURCE_DIR}")
-
-# Create INTERFACE library with namespaced target mujoco::mujoco
-add_library(mujoco INTERFACE)
-add_library(mujoco::mujoco ALIAS mujoco)
-target_include_directories(mujoco INTERFACE
-  $<BUILD_INTERFACE:${MUJOCO_ROOT_DIR}/include>
-  $<INSTALL_INTERFACE:opt/${PROJECT_NAME}/include>
-)
-target_link_directories(mujoco INTERFACE
-  $<BUILD_INTERFACE:${MUJOCO_ROOT_DIR}/lib>
-  $<INSTALL_INTERFACE:opt/${PROJECT_NAME}/lib>
-)
-target_link_libraries(mujoco INTERFACE ${MUJOCO_ROOT_DIR}/lib/libmujoco.so)
+set(MUJOCO_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/opt/${PROJECT_NAME}")
 
 # Install prebuilt binaries
 install(DIRECTORY ${MUJOCO_ROOT_DIR}/
   DESTINATION opt/${PROJECT_NAME}
 )
 
-# Export and install the target
-install(TARGETS mujoco
-  EXPORT mujoco_vendorTargets
-)
-install(EXPORT mujoco_vendorTargets
-  FILE mujoco_vendorTargets.cmake
-  NAMESPACE mujoco::
-  DESTINATION share/${PROJECT_NAME}/cmake
-)
-
-ament_package(
-  CONFIG_EXTRAS_POST "mujoco_vendor-extra.cmake.in"
-)
+# Export includes and libraries
+ament_export_include_directories(${MUJOCO_INSTALL_DIR}/include)
+ament_export_libraries(mujoco)
+ament_package()
