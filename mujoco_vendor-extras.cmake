@@ -8,3 +8,4 @@ if(NOT TARGET mujoco::mujoco)
 endif()
 
 set(mujoco_vendor_LIBRARIES mujoco::mujoco)
+set(mujoco_vendor_LIBRARY_DIRS "${mujoco_vendor_DIR}/../../../opt/mujoco_vendor/lib")

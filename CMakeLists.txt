@@ -43,16 +43,40 @@ FetchContent_MakeAvailable(mujoco_binary)
 set(MUJOCO_ROOT_DIR "${mujoco_binary_SOURCE_DIR}")
 set(MUJOCO_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/opt/${PROJECT_NAME}")
 
-# Install prebuilt binaries
+# Install prebuilt binaries (copy actual files, resolve symlinks)
 install(DIRECTORY ${MUJOCO_ROOT_DIR}/
   DESTINATION opt/${PROJECT_NAME}
+  USE_SOURCE_PERMISSIONS
+  FILES_MATCHING
+  PATTERN "*"
 )
 
-# Export includes
+add_library(mujoco INTERFACE)
+# add alias mujoco::mujoco mujoco
+add_library(mujoco::mujoco ALIAS mujoco)
+add_dependencies(mujoco mujoco_binary)
+target_include_directories(mujoco INTERFACE
+  $<BUILD_INTERFACE:${MUJOCO_ROOT_DIR}/include>
+  $<INSTALL_INTERFACE:opt/${PROJECT_NAME}/include>
+)
+target_link_libraries(mujoco INTERFACE
+  $<BUILD_INTERFACE:${MUJOCO_ROOT_DIR}/lib/libmujoco.so>
+  $<INSTALL_INTERFACE:opt/${PROJECT_NAME}/lib/libmujoco.so>
+)
+
+install(TARGETS mujoco
+  EXPORT export_${PROJECT_NAME}
+  LIBRARY DESTINATION opt/${PROJECT_NAME}/lib
+  ARCHIVE DESTINATION opt/${PROJECT_NAME}/lib
+  RUNTIME DESTINATION opt/${PROJECT_NAME}/bin
+)
+
+# Export includes and library path
+ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
 ament_export_include_directories(opt/${PROJECT_NAME}/include)
 
 # Install environment hook to set LD_LIBRARY_PATH
-ament_environment_hooks("${CMAKE_CURRENT_SOURCE_DIR}/env-hooks/${PROJECT_NAME}.dsv.in")
+ament_environment_hooks("${CMAKE_CURRENT_SOURCE_DIR}/env-hooks/${PROJECT_NAME}.dsv")
 
 ament_package(
   CONFIG_EXTRAS_POST "mujoco_vendor-extras.cmake"
