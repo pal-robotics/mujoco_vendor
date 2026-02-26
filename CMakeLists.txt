@@ -55,6 +55,36 @@ install(DIRECTORY ${MUJOCO_ROOT_DIR}/
   PATTERN "*"
 )
 
+# The MuJoCo plugins ship with a hardcoded build-time RPATH
+# (/tmpfs/src/git/mujoco_internal/build/lib) that does not exist on target
+# machines. Rewrite it to a $ORIGIN-relative path so that:
+#   1. dpkg-shlibdeps can locate libmujoco.so.3.4.0 when analysing the plugins
+#      in the Debian staging area (it expands $ORIGIN to the directory of the
+#      file under analysis, landing in opt/mujoco_vendor/lib/ where
+#      libmujoco.so.3.4.0 is installed by this same package), and
+#   2. plugins can find libmujoco.so at runtime without relying solely on
+#      LD_LIBRARY_PATH.
+find_program(PATCHELF_EXECUTABLE patchelf)
+if(NOT PATCHELF_EXECUTABLE)
+  message(WARNING
+    "patchelf not found. MuJoCo plugin RPATHs will not be fixed; "
+    "Debian packaging will fail with 'cannot find libmujoco.so.3.4.0'.")
+else()
+  install(CODE "
+    file(GLOB _mujoco_plugins
+      \"\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/opt/${PROJECT_NAME}/bin/mujoco_plugin/*.so\")
+    foreach(_plugin IN LISTS _mujoco_plugins)
+      execute_process(
+        COMMAND \"${PATCHELF_EXECUTABLE}\" --set-rpath \"\$ORIGIN/../../lib\" \"\${_plugin}\"
+        RESULT_VARIABLE _rc
+      )
+      if(NOT _rc EQUAL 0)
+        message(WARNING \"patchelf failed for \${_plugin}\")
+      endif()
+    endforeach()
+  ")
+endif()
+
 add_library(mujoco INTERFACE)
 # add alias mujoco::mujoco mujoco
 add_library(mujoco::mujoco ALIAS mujoco)
