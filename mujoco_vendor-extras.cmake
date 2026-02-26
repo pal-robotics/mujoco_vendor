@@ -4,6 +4,7 @@ if(NOT TARGET mujoco::mujoco)
   set_target_properties(mujoco::mujoco PROPERTIES
     IMPORTED_LOCATION "${mujoco_vendor_DIR}/../../../opt/mujoco_vendor/lib/libmujoco.so"
     INTERFACE_INCLUDE_DIRECTORIES "${mujoco_vendor_DIR}/../../../opt/mujoco_vendor/include"
+    INTERFACE_LINK_OPTIONS "LINKER:-rpath,${mujoco_vendor_DIR}/../../../opt/mujoco_vendor/lib"
   )
 endif()
 
