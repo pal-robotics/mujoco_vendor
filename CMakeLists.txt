@@ -33,10 +33,14 @@ set(MUJOCO_ASSET_URL "${MUJOCO_DOWNLOAD_URL}/${MUJOCO_ASSET_NAME}")
 
 message(STATUS "Downloading MuJoCo prebuilt binary: ${MUJOCO_ASSET_NAME}")
 
+if(CMAKE_VERSION VERSION_GREATER_EQUAL "3.24")
+  set(_mujoco_timestamp DOWNLOAD_EXTRACT_TIMESTAMP TRUE)
+endif()
+
 FetchContent_Declare(
   mujoco_binary
-  URL ${MUJOCO_ASSET_URL}
-  DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+  URL "${MUJOCO_ASSET_URL}"
+  ${_mujoco_timestamp}
 )
 FetchContent_MakeAvailable(mujoco_binary)
 
