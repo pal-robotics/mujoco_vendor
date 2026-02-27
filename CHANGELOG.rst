@@ -2,8 +2,8 @@
 Changelog for package mujoco_vendor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.7 (2026-02-27)
+------------------
 * Update readme (`#6 <https://github.com/pal-robotics/mujoco_vendor/issues/6>`_)
 * Add symlinks to be able to find executables (`#5 <https://github.com/pal-robotics/mujoco_vendor/issues/5>`_)
 * Package prebuilt mujoco binaries (`#4 <https://github.com/pal-robotics/mujoco_vendor/issues/4>`_)
