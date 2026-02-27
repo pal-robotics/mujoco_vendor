@@ -85,6 +85,25 @@ else()
   ")
 endif()
 
+# Create symlinks in lib/${PROJECT_NAME}/ pointing to the real binaries in
+# opt/${PROJECT_NAME}/bin/ so that `ros2 run mujoco_vendor <exe>` works
+# without duplicating files on disk.
+install(CODE "
+  file(GLOB _mujoco_exes
+    \"\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/opt/${PROJECT_NAME}/bin/*\")
+  file(MAKE_DIRECTORY \"\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}\")
+  foreach(_exe IN LISTS _mujoco_exes)
+    if(NOT IS_DIRECTORY \"\${_exe}\")
+      get_filename_component(_name \"\${_exe}\" NAME)
+      execute_process(
+        COMMAND \${CMAKE_COMMAND} -E create_symlink
+          \"../../opt/${PROJECT_NAME}/bin/\${_name}\"
+          \"\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}/\${_name}\"
+      )
+    endif()
+  endforeach()
+")
+
 add_library(mujoco INTERFACE)
 # add alias mujoco::mujoco mujoco
 add_library(mujoco::mujoco ALIAS mujoco)
