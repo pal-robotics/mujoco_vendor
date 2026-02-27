@@ -2,6 +2,13 @@
 Changelog for package mujoco_vendor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Update readme (`#6 <https://github.com/pal-robotics/mujoco_vendor/issues/6>`_)
+* Add symlinks to be able to find executables (`#5 <https://github.com/pal-robotics/mujoco_vendor/issues/5>`_)
+* Package prebuilt mujoco binaries (`#4 <https://github.com/pal-robotics/mujoco_vendor/issues/4>`_)
+* Contributors: Sai Kishor Kothakota, Erik Holum
+
 0.0.6 (2025-12-23)
 ------------------
 * Merge branch 'bump/mujoco_vendor/3.4.0' into 'master'
