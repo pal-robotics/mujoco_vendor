@@ -44,7 +44,15 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(mujoco_binary)
 
-set(MUJOCO_ROOT_DIR "${mujoco_binary_SOURCE_DIR}")
+# Copy the FetchContent download to a stable, version-named directory in the
+# build tree so that cmake_install.cmake does not reference the
+# FetchContent-internal _deps/ path, which may not exist when cmake re-checks
+# the build system during the Debian dh_auto_install step.
+# The version suffix ensures a fresh copy whenever MUJOCO_VERSION changes.
+set(MUJOCO_ROOT_DIR "${CMAKE_BINARY_DIR}/mujoco_prebuilt_${MUJOCO_VERSION}")
+if(NOT EXISTS "${MUJOCO_ROOT_DIR}")
+  file(COPY "${mujoco_binary_SOURCE_DIR}/" DESTINATION "${MUJOCO_ROOT_DIR}")
+endif()
 set(MUJOCO_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/opt/${PROJECT_NAME}")
 
 # Install prebuilt binaries (copy actual files, resolve symlinks)
