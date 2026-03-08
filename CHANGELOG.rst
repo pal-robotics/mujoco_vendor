@@ -2,6 +2,11 @@
 Changelog for package mujoco_vendor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Fix the build tree mujoco binary directory (`#8 <https://github.com/pal-robotics/mujoco_vendor/issues/8>`_)
+* Contributors: Sai Kishor Kothakota
+
 0.0.7 (2026-02-27)
 ------------------
 * Update readme (`#6 <https://github.com/pal-robotics/mujoco_vendor/issues/6>`_)
