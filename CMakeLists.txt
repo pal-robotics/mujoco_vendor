@@ -7,6 +7,17 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 find_package(ament_cmake REQUIRED)
+
+# Handle the case in which mujoco should not vendored, for example in conda-forge/robostack where a recent enough
+# mujoco package is available in the distribution, and there is no need to vendor it
+# We use the AMENT_VENDOR_POLICY option proposed in https://github.com/ament/ament_cmake/pull/592 and that will
+# be introduced at some point in ament_vendor for this purpouse
+if(DEFINED AMENT_VENDOR_POLICY AND (AMENT_VENDOR_POLICY STREQUAL "NEVER_VENDOR" OR AMENT_VENDOR_POLICY STREQUAL "NEVER_VENDOR_IGNORE_SATISFIED_CHECK"))
+  ament_export_dependencies(mujoco)
+  ament_package()
+  return()
+endif()
+
 include(FetchContent)
 
 set(MUJOCO_VERSION "3.4.0")
