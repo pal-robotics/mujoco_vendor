@@ -18,6 +18,8 @@
 
   <build_depend>pkg-config</build_depend>
 
+  <depend>ament_index_cpp</depend>
+
 
   <export>
     <build_type>ament_cmake</build_type>

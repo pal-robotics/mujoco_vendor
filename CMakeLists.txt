@@ -107,6 +107,13 @@ endif()
 # Create symlinks in lib/${PROJECT_NAME}/ pointing to the real binaries in
 # opt/${PROJECT_NAME}/bin/ so that `ros2 run mujoco_vendor <exe>` works
 # without duplicating files on disk.
+# On UNIX, `simulate` is excluded: it instead gets a wrapper script that 
+# preloads the plugin-path shim before executing the real binary.
+if(UNIX)
+  set(symlink_exclude "simulate")
+else()
+  set(symlink_exclude "")
+endif()
 install(CODE "
   file(GLOB _mujoco_exes
     \"\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/opt/${PROJECT_NAME}/bin/*\")
@@ -114,11 +121,13 @@ install(CODE "
   foreach(_exe IN LISTS _mujoco_exes)
     if(NOT IS_DIRECTORY \"\${_exe}\")
       get_filename_component(_name \"\${_exe}\" NAME)
-      execute_process(
-        COMMAND \${CMAKE_COMMAND} -E create_symlink
-          \"../../opt/${PROJECT_NAME}/bin/\${_name}\"
-          \"\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}/\${_name}\"
-      )
+      if(NOT \"\${_name}\" STREQUAL \"${symlink_exclude}\")
+        execute_process(
+          COMMAND \${CMAKE_COMMAND} -E create_symlink
+            \"../../opt/${PROJECT_NAME}/bin/\${_name}\"
+            \"\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/lib/${PROJECT_NAME}/\${_name}\"
+        )
+      endif()
     endif()
   endforeach()
 ")
@@ -142,6 +151,27 @@ install(TARGETS mujoco
   ARCHIVE DESTINATION opt/${PROJECT_NAME}/lib
   RUNTIME DESTINATION opt/${PROJECT_NAME}/bin
 )
+
+# LD_PRELOAD shim that loads MuJoCo plugins from an additional directory before main() runs.
+# Since plugin registration is process-global inside libmujoco.so,
+# a preloaded constructor can add plugins from anywhere.
+# The wrapper script replaces the lib/${PROJECT_NAME}/simulate symlink so that
+# `ros2 run mujoco_vendor simulate` picks up the shim transparently.
+if(UNIX)
+  find_package(ament_index_cpp REQUIRED)
+  add_library(mujoco_plugin_shim SHARED src/plugin_path_shim.cc)
+  target_link_libraries(mujoco_plugin_shim PRIVATE
+    mujoco
+    ament_index_cpp::ament_index_cpp
+  )
+  target_compile_features(mujoco_plugin_shim PRIVATE cxx_std_17)
+  # Installed next to libmujoco.so so the shim finds it via $ORIGIN.
+  set_target_properties(mujoco_plugin_shim PROPERTIES INSTALL_RPATH "\$ORIGIN")
+  install(TARGETS mujoco_plugin_shim
+    LIBRARY DESTINATION opt/${PROJECT_NAME}/lib
+  )
+  install(PROGRAMS scripts/simulate DESTINATION lib/${PROJECT_NAME})
+endif()
 
 # Export includes and library path
 ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
