@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Wrapper installed as lib/mujoco_vendor/simulate so that
+# `ros2 run mujoco_vendor simulate` preloads the plugin-path shim
+# before executing the prebuilt MuJoCo simulate binary.
+
+here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+shim="${here}/../../opt/mujoco_vendor/lib/libmujoco_plugin_shim.so"
+exec env LD_PRELOAD="${shim}${LD_PRELOAD:+:${LD_PRELOAD}}" \
+  "${here}/../../opt/mujoco_vendor/bin/simulate" "$@"
