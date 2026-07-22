@@ -2,8 +2,8 @@
 Changelog for package mujoco_vendor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.9 (2026-07-22)
+------------------
 * Export simulate, lodepng, and path variables for downstream packages (`#10 <https://github.com/pal-robotics/mujoco_vendor/issues/10>`_)
 * Add support for the AMENT_VENDOR_POLICY variable to support unvendoring (`#9 <https://github.com/pal-robotics/mujoco_vendor/issues/9>`_)
 * Contributors: Erik Holum, Silvio Traversaro
