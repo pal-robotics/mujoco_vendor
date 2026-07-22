@@ -125,7 +125,7 @@ install(TARGETS mujoco
 )
 
 # Pinned lodepng version from:
-# https://github.com/google-deepmind/mujoco/blob/3.10.0/simulate/CMakeLists.txt#L26
+# https://github.com/google-deepmind/mujoco/blob/3.4.0/simulate/CMakeLists.txt#L26
 set(MUJOCO_DEP_VERSION_lodepng "b4ed2cd7ecf61d29076169b49199371456d4f90b")
 FetchContent_Declare(lodepng
   GIT_REPOSITORY https://github.com/lvandeve/lodepng.git
