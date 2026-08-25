@@ -20,7 +20,7 @@ endif()
 
 include(FetchContent)
 
-set(MUJOCO_VERSION "3.4.0")
+set(MUJOCO_VERSION "3.12.0")
 set(MUJOCO_DOWNLOAD_URL "https://github.com/google-deepmind/mujoco/releases/download/${MUJOCO_VERSION}")
 
 # Detect system and architecture for appropriate asset selection
@@ -77,17 +77,17 @@ install(DIRECTORY ${MUJOCO_ROOT_DIR}/
 # The MuJoCo plugins ship with a hardcoded build-time RPATH
 # (/tmpfs/src/git/mujoco_internal/build/lib) that does not exist on target
 # machines. Rewrite it to a $ORIGIN-relative path so that:
-#   1. dpkg-shlibdeps can locate libmujoco.so.3.4.0 when analysing the plugins
+#   1. dpkg-shlibdeps can locate libmujoco.so.3.12.0 when analysing the plugins
 #      in the Debian staging area (it expands $ORIGIN to the directory of the
 #      file under analysis, landing in opt/mujoco_vendor/lib/ where
-#      libmujoco.so.3.4.0 is installed by this same package), and
+#      libmujoco.so.3.12.0 is installed by this same package), and
 #   2. plugins can find libmujoco.so at runtime without relying solely on
 #      LD_LIBRARY_PATH.
 find_program(PATCHELF_EXECUTABLE patchelf)
 if(NOT PATCHELF_EXECUTABLE)
   message(WARNING
     "patchelf not found. MuJoCo plugin RPATHs will not be fixed; "
-    "Debian packaging will fail with 'cannot find libmujoco.so.3.4.0'.")
+    "Debian packaging will fail with 'cannot find libmujoco.so.3.12.0'.")
 else()
   install(CODE "
     file(GLOB _mujoco_plugins
