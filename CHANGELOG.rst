@@ -2,8 +2,8 @@
 Changelog for package mujoco_vendor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.0 (2026-08-26)
+------------------
 * Remove Sergi from the maintainers
 * Bump MuJoCo to 3.12.0
 * Contributors: Sai Kishor Kothakota
