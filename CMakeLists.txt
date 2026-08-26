@@ -182,6 +182,7 @@ target_include_directories(mujoco_simulate PUBLIC
 target_link_libraries(mujoco_simulate PUBLIC mujoco glfw PRIVATE lodepng)
 target_compile_options(mujoco_simulate PRIVATE
   -Wno-missing-field-initializers -Wno-unused-parameter -Wno-sign-compare -Wno-psabi
+  -Wno-shadow -Wno-float-equal
 )
 install(TARGETS mujoco_simulate ARCHIVE DESTINATION opt/${PROJECT_NAME}/lib)
 install(DIRECTORY ${_SIM_DIR}/ DESTINATION opt/${PROJECT_NAME}/include/simulate
