@@ -2,6 +2,12 @@
 Changelog for package mujoco_vendor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Remove Sergi from the maintainers
+* Bump MuJoCo to 3.12.0
+* Contributors: Sai Kishor Kothakota
+
 0.0.9 (2026-07-22)
 ------------------
 * Export simulate, lodepng, and path variables for downstream packages (`#10 <https://github.com/pal-robotics/mujoco_vendor/issues/10>`_)
