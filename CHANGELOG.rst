@@ -2,8 +2,8 @@
 Changelog for package mujoco_vendor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.1 (2026-08-27)
+------------------
 * Merge branch 'fix/build_warnings' into 'master'
   Fix build warnings
   See merge request third-party/mujoco_vendor!8
