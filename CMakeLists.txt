@@ -8,12 +8,15 @@ endif()
 
 find_package(ament_cmake REQUIRED)
 
+find_package(tinyxml2_vendor REQUIRED)
+find_package(TinyXML2 REQUIRED)
+
 # Handle the case in which mujoco should not vendored, for example in conda-forge/robostack where a recent enough
 # mujoco package is available in the distribution, and there is no need to vendor it
 # We use the AMENT_VENDOR_POLICY option proposed in https://github.com/ament/ament_cmake/pull/592 and that will
 # be introduced at some point in ament_vendor for this purpouse
 if(DEFINED AMENT_VENDOR_POLICY AND (AMENT_VENDOR_POLICY STREQUAL "NEVER_VENDOR" OR AMENT_VENDOR_POLICY STREQUAL "NEVER_VENDOR_IGNORE_SATISFIED_CHECK"))
-  ament_export_dependencies(mujoco)
+  ament_export_dependencies(mujoco tinyxml2_vendor)
   ament_package()
   return()
 endif()
@@ -135,6 +138,16 @@ target_link_libraries(mujoco INTERFACE
   $<BUILD_INTERFACE:${MUJOCO_ROOT_DIR}/lib/libmujoco.so>
   $<INSTALL_INTERFACE:opt/${PROJECT_NAME}/lib/libmujoco.so>
 )
+# MuJoCo has TinyXML2 statically linked, which conflicts with the system TinyXML2
+# used by FastDDS. We need to ensure the system TinyXML2 is loaded first.
+# Force tinyxml2 to appear first in the DT_NEEDED entries by using LINK_OPTIONS.
+# TODO: Remove this after the following is resolved and the next ROS sync
+# https://github.com/pal-robotics/mujoco_vendor/issues/2
+target_link_options(mujoco INTERFACE
+  "LINKER:--push-state,--no-as-needed"
+  "$<TARGET_LINKER_FILE:tinyxml2::tinyxml2>"
+  "LINKER:--pop-state"
+)
 
 install(TARGETS mujoco
   EXPORT export_${PROJECT_NAME}
@@ -192,6 +205,7 @@ install(DIRECTORY ${_SIM_DIR}/ DESTINATION opt/${PROJECT_NAME}/include/simulate
 # Export includes and library path
 ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
 ament_export_include_directories(opt/${PROJECT_NAME}/include)
+ament_export_dependencies(tinyxml2_vendor)
 
 # Install environment hook to set LD_LIBRARY_PATH
 ament_environment_hooks("${CMAKE_CURRENT_SOURCE_DIR}/env-hooks/${PROJECT_NAME}.dsv")
