@@ -14,6 +14,21 @@ find_package(ament_cmake REQUIRED)
 # be introduced at some point in ament_vendor for this purpouse
 if(DEFINED AMENT_VENDOR_POLICY AND (AMENT_VENDOR_POLICY STREQUAL "NEVER_VENDOR" OR AMENT_VENDOR_POLICY STREQUAL "NEVER_VENDOR_IGNORE_SATISFIED_CHECK"))
   ament_export_dependencies(mujoco)
+
+  # Manually register the included mujoco extensions into the ament resource index so consumers can
+  # easily discover them.
+  find_package(mujoco REQUIRED)
+  get_filename_component(_mujoco_prefix "${mujoco_DIR}/../../.." ABSOLUTE)
+  set(_mujoco_plugin_install_dir "lib/${PROJECT_NAME}/mujoco_plugin")
+  foreach(_src_dir "${_mujoco_prefix}/bin/mujoco_plugin" "${_mujoco_prefix}/lib/mujoco_plugin")
+    if(EXISTS "${_src_dir}")
+      file(GLOB _plugin_libs "${_src_dir}/*.so")
+      install(FILES ${_plugin_libs} DESTINATION "${_mujoco_plugin_install_dir}")
+      ament_index_register_resource(mujoco_plugins CONTENT "${_mujoco_plugin_install_dir}")
+      break()
+    endif()
+  endforeach()
+
   ament_package()
   return()
 endif()
@@ -188,6 +203,9 @@ install(TARGETS mujoco_simulate ARCHIVE DESTINATION opt/${PROJECT_NAME}/lib)
 install(DIRECTORY ${_SIM_DIR}/ DESTINATION opt/${PROJECT_NAME}/include/simulate
   FILES_MATCHING PATTERN "*.h"
 )
+
+# Register the bundled mujoco extensions from above
+ament_index_register_resource(mujoco_plugins CONTENT "opt/${PROJECT_NAME}/bin/mujoco_plugin")
 
 # Export includes and library path
 ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
