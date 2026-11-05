@@ -2,8 +2,8 @@
 Changelog for package mujoco_vendor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.2 (2026-11-05)
+------------------
 * Rename mujoco and lodepng targets to match conda + a placeholder (`#17 <https://github.com/pal-robotics/mujoco_vendor/issues/17>`_)
 * Contributors: Erik Holum
 
