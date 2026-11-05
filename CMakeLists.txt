@@ -14,7 +14,9 @@ find_package(ament_cmake REQUIRED)
 # be introduced at some point in ament_vendor for this purpouse
 if(DEFINED AMENT_VENDOR_POLICY AND (AMENT_VENDOR_POLICY STREQUAL "NEVER_VENDOR" OR AMENT_VENDOR_POLICY STREQUAL "NEVER_VENDOR_IGNORE_SATISFIED_CHECK"))
   ament_export_dependencies(mujoco)
-  ament_package()
+  ament_package(
+  CONFIG_EXTRAS_POST "mujoco_vendor-extras.cmake"
+  )
   return()
 endif()
 
